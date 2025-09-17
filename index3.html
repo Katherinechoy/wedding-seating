@@ -43,7 +43,7 @@ td{padding:6px 8px;border-bottom:1px solid #eee;}
   <h1>Find your seat</h1>
   <div class="small">Type your full name (or part of it). Matching is case-insensitive.</div>
   <input id="search" placeholder="Search name..." autofocus />
-<!-- Cute Wedding Button -->
+
 <a href="seating_chart.png" target="_blank" class="wedding-button">
   💒 View Seating Chart <span>💕</span>
 </a>
@@ -378,13 +378,34 @@ td{padding:6px 8px;border-bottom:1px solid #eee;}
 </div>
 
 <script>
-const rows = Array.from(document.querySelectorAll('#guestTable tbody tr')).map(tr => ({name: tr.querySelector('.name').textContent.trim(), table: tr.querySelector('.table').textContent.trim()}));
-const search = document.getElementById('search');
-const resultBox = document.getElementById('result');
+    const searchInput = document.getElementById("search");
+    const resultBox = document.getElementById("result");
+    const guestTable = document.getElementById("guestTable").querySelector("tbody");
 
-function normalize(s) { try { return s.normalize('NFKD').replace(/\p{Diacritic}/gu,'').toLowerCase(); } catch(e) { return s.toLowerCase(); } }
+    seating.forEach(guest => {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td class="name">${guest.name}</td><td class="table">Table ${guest.table}</td>`;
+      guestTable.appendChild(row);
+    });
 
-function update(){
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLowerCase();
+      if (!query) {
+        resultBox.style.display = "none";
+        return;
+      }
+      const found = seating.find(g => g.name.toLowerCase().includes(query));
+      if (found) {
+        resultBox.textContent = `${found.name} → Table ${found.table}`;
+        resultBox.style.display = "block";
+      } else {
+        resultBox.textContent = "No match found.";
+        resultBox.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
   const q = normalize(search.value.trim());
   if (!q) { resultBox.style.display='none'; resultBox.innerHTML=''; return; }
   const matched = rows.filter(r => normalize(r.name).includes(q));
