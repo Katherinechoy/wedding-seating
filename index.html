@@ -383,12 +383,6 @@ const resultBox = document.getElementById("result");
 const guestTable = document.getElementById("guestTable").querySelector("tbody");
 
 
-    seating.forEach(guest => {
-      const rows = Array.from(guestTable.querySelectorAll("tr")).map(tr => ({
-  name: tr.cells[0].textContent.trim(),
-  table: tr.cells[1].textContent.trim()
-}));
-
     function normalize(str) {
   return str.toLowerCase().replace(/\s+/g, " ").trim();
 }
