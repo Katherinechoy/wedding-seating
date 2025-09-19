@@ -44,9 +44,9 @@ td{padding:6px 8px;border-bottom:1px solid #eee;}
   <div class="small">Type your full name (or part of it). Matching is case-insensitive.</div>
   <input id="search" placeholder="Search name..." autofocus />
 
-<a href="seating.html" class="wedding-button">
-  View Seating Chart <span>💕</span>
-</a>
+  <a href="seating.html" class="wedding-button">
+    View Seating Chart <span>💕</span>
+  </a>
 
   <div id="result" class="result"></div>
   <table id="guestTable" aria-hidden="true">
@@ -373,50 +373,56 @@ td{padding:6px 8px;border-bottom:1px solid #eee;}
 <tr><td class="name">劉業偉夫妇</td><td class="table"></td></tr>
 <tr><td class="name">申满珍女士</td><td class="table"></td></tr>
 <tr><td class="name">黄福順先生</td><td class="table"></td></tr>
-    </tbody>
+   </tbody>
   </table>
 </div>
 
 <script>
-    const searchInput = document.getElementById("search");
-    const resultBox = document.getElementById("result");
-    const guestTable = document.getElementById("guestTable").querySelector("tbody");
+const searchInput = document.getElementById("search");
+const resultBox = document.getElementById("result");
+const guestTable = document.getElementById("guestTable").querySelector("tbody");
+
 
     seating.forEach(guest => {
-      const row = document.createElement("tr");
-      row.innerHTML = `<td class="name">${guest.name}</td><td class="table">Table ${guest.table}</td>`;
-      guestTable.appendChild(row);
-    });
+      const rows = Array.from(guestTable.querySelectorAll("tr")).map(tr => ({
+  name: tr.cells[0].textContent.trim(),
+  table: tr.cells[1].textContent.trim()
+}));
 
-    searchInput.addEventListener("input", () => {
-      const query = searchInput.value.trim().toLowerCase();
-      if (!query) {
-        resultBox.style.display = "none";
-        return;
-      }
-      const found = seating.find(g => g.name.toLowerCase().includes(query));
-      if (found) {
-        resultBox.textContent = `${found.name} → Table ${found.table}`;
-        resultBox.style.display = "block";
-      } else {
-        resultBox.textContent = "No match found.";
-        resultBox.style.display = "block";
-      }
-    });
-  </script>
-</body>
-</html>
-  const q = normalize(search.value.trim());
-  if (!q) { resultBox.style.display='none'; resultBox.innerHTML=''; return; }
+    function normalize(str) {
+  return str.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function update() {
+  const q = normalize(searchInput.value);
+  if (!q) {
+    resultBox.style.display = "none";
+    resultBox.innerHTML = "";
+    return;
+  }
   const matched = rows.filter(r => normalize(r.name).includes(q));
-  if (matched.length===0){ resultBox.style.display='block'; resultBox.innerHTML = '<strong>No matches</strong>'; return; }
-  if (matched.length>20){ resultBox.style.display='block'; resultBox.innerHTML = '<strong>' + matched.length + ' matches</strong><div class="small">Please type more letters to narrow the results.</div>'; return; }
-  const html = matched.map(m => '<div><strong>' + m.name + '</strong> — Table <span style="font-weight:900">' + (m.table || '—') + '</span></div>').join('<hr/>');
-  resultBox.style.display='block';
+  if (matched.length === 0) {
+    resultBox.style.display = "block";
+    resultBox.innerHTML = "<strong>No matches</strong>";
+    return;
+  }
+  if (matched.length > 20) {
+    resultBox.style.display = "block";
+    resultBox.innerHTML = "<strong>" + matched.length + " matches</strong><div class='small'>Please type more letters to narrow the results.</div>";
+    return;
+  }
+  const html = matched.map(m => "<div><strong>" + m.name + "</strong> — Table <span style='font-weight:900'>" + (m.table || "—") + "</span></div>").join("<hr/>");
+  resultBox.style.display = "block";
   resultBox.innerHTML = html;
 }
 
-search.addEventListener('input', update);
+searchInput.addEventListener("input", update);
+searchInput.addEventListener("keydown", function(e){ if (e.key==='Enter') e.preventDefault(); });
+
+window.onload = function(){ document.getElementById('search').focus(); }
+</script>
+</body>
+</html>pdate);
 search.addEventListener('keydown', function(e){ if (e.key==='Enter') e.preventDefault(); });
 
 window.onload = function(){ document.getElementById('search').focus(); }
