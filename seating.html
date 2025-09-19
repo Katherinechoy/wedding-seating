@@ -1,17 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Seating Chart</title>
+  <style>
+    body {
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+      padding: 18px;
+      background: #fffaf6;
+      text-align: center;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #b8860b;
+      margin-bottom: 8px;
+    }
+    .small { color:#666; margin-bottom:12px; }
+    .wedding-button {
+      display:inline-block;
+      margin: 10px 8px;
+      padding: 10px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #222;
+      background: linear-gradient(135deg,#f7d8c3,#f7d683);
+      border-radius: 40px;
+      text-decoration: none;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+    .wedding-button:hover { transform: translateY(-2px); }
+    .img-wrap { margin-top:18px; }
+    img { max-width:100%; height:auto; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.06);}
+    .help { font-size:13px; color:#666; margin-top:10px; }
+  </style>
 </head>
-<body style="text-align:center; font-family:Arial, sans-serif;">
-  <h1>Wedding Seating Chart</h1>
+<body>
+  <div class="container">
+    <h1>Wedding Seating Chart</h1>
+    <div class="small">Tap the image to open full size. Use the button below to return to the search page.</div>
 
-  <!-- PNG seating chart -->
-  <img src="seating_chart.png" alt="Seating Chart" style="max-width:100%; height:auto;">
+    <!-- Buttons -->
+    <div>
+      <!-- Return to search (uses history.back if available, otherwise falls back to index.html) -->
+      <button id="backBtn" class="wedding-button" aria-label="Return to search">⬅ Return to Search</button>
 
-  <br><br>
-  <a href="index.html">⬅ Back to Search</a>
+      <!-- Open full image in new tab (optional) -->
+      <a href="seating_chart.png" target="_blank" rel="noopener" class="wedding-button">Open Full Image ↗</a>
+    </div>
+
+    <!-- Seating image -->
+    <div class="img-wrap">
+      <a href="seating_chart.png" target="_blank" rel="noopener">
+        <img src="seating_chart.png" alt="Seating Chart">
+      </a>
+    </div>
+
+    <div class="help">If the Return button doesn't work (very rare), click <a href="index.html">this link</a> to go back.</div>
+  </div>
+
+  <script>
+    document.getElementById('backBtn').addEventListener('click', function () {
+      // Try to go back in history if user came from index.html; otherwise navigate to index.html
+      try {
+        if (document.referrer && document.referrer.indexOf(location.hostname) !== -1) {
+          history.back();
+        } else {
+          location.href = 'index.html';
+        }
+      } catch (e) {
+        location.href = 'index.html';
+      }
+    });
+  </script>
 </body>
 </html>
