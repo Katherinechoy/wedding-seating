@@ -382,8 +382,15 @@ const searchInput = document.getElementById("search");
 const resultBox = document.getElementById("result");
 const guestTable = document.getElementById("guestTable").querySelector("tbody");
 
+// Build rows array from the table
+const rows = Array.from(guestTable.querySelectorAll("tr")).map(tr => {
+  return {
+    name: tr.querySelector(".name").textContent,
+    table: tr.querySelector(".table").textContent
+  };
+});
 
-    function normalize(str) {
+function normalize(str) {
   return str.toLowerCase().replace(/\s+/g, " ").trim();
 }
 
@@ -402,10 +409,13 @@ function update() {
   }
   if (matched.length > 20) {
     resultBox.style.display = "block";
-    resultBox.innerHTML = "<strong>" + matched.length + " matches</strong><div class='small'>Please type more letters to narrow the results.</div>";
+    resultBox.innerHTML =
+      "<strong>" + matched.length + " matches</strong><div class='small'>Please type more letters to narrow the results.</div>";
     return;
   }
-  const html = matched.map(m => "<div><strong>" + m.name + "</strong> — Table <span style='font-weight:900'>" + (m.table || "—") + "</span></div>").join("<hr/>");
+  const html = matched
+    .map(m => "<div><strong>" + m.name + "</strong> — Table <span style='font-weight:900'>" + (m.table || "—") + "</span></div>")
+    .join("<hr/>");
   resultBox.style.display = "block";
   resultBox.innerHTML = html;
 }
@@ -413,13 +423,7 @@ function update() {
 searchInput.addEventListener("input", update);
 searchInput.addEventListener("keydown", function(e){ if (e.key==='Enter') e.preventDefault(); });
 
-window.onload = function(){ document.getElementById('search').focus(); }
-</script>
-</body>
-</html>pdate);
-search.addEventListener('keydown', function(e){ if (e.key==='Enter') e.preventDefault(); });
-
-window.onload = function(){ document.getElementById('search').focus(); }
+window.onload = function(){ searchInput.focus(); }
 </script>
 </body>
 </html>
