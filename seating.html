@@ -71,31 +71,37 @@
       margin: 25px 0;
     }
 
-    .wedding-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 25px;
-      font-size: 16px;
-      font-weight: 600;
-      color: #5a4c4c;
-      background: linear-gradient(135deg, #ffdbe1, #ffd4d4);
-      border: none;
-      border-radius: 50px;
-      text-decoration: none;
-      box-shadow: 0 4px 10px var(--shadow-color);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
+    /* 默认 wedding-button 没有边框 */
+.wedding-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #5a4c4c;
+  background: linear-gradient(135deg, #ffdbe1, #ffd4d4);
+  border: none;   /* 去掉默认边框 */
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px var(--shadow-color);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
 
-    .wedding-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(90, 76, 76, 0.2);
-    }
+.wedding-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(90, 76, 76, 0.2);
+}
 
-    .wedding-button i {
-      margin-right: 8px; /* Add spacing between icon and text */
-    }
+.wedding-button i {
+  margin-right: 8px;
+}
+
+.back-button {
+  border: 2px solid #635e53;
+}
+
 
     .img-wrap {
       margin-top: 18px;
@@ -151,14 +157,17 @@
   </div>
 
   <div class="container">
-    <div class="button-container">
-      <button id="backBtn" class="wedding-button" aria-label="Return to search">
-        <i class="fas fa-arrow-left"></i> Return to Search
-      </button>
-      <a href="https://katherinechoy.github.io/wedding-seating/seating_chart.png" target="_blank" rel="noopener" class="wedding-button">
-        <i class="fas fa-expand"></i> Open Full Image
-      </a>
-    </div>
+   <div class="button-container">
+  <button id="backBtn" class="wedding-button back-button" aria-label="Return to search">
+    <i class="fas fa-arrow-left"></i> Return to Search
+  </button>
+  <a href="https://katherinechoy.github.io/wedding-seating/seating_chart.png" 
+     target="_blank" rel="noopener" 
+     class="wedding-button">
+    <i class="fas fa-expand"></i> Open Full Image
+  </a>
+</div>
+
 
     <div class="img-wrap">
       <a href="seating_chart.png" target="_blank" rel="noopener">
